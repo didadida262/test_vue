@@ -19,6 +19,7 @@ class Compile {
                 this.compileText(node)
                 // 解析文本
             } else if (nType === 1) {
+                this.compileElement(node)
                 // 元素节点
                 
             }
@@ -26,6 +27,18 @@ class Compile {
                 this.compile(node)
             }
         })
+    }
+    compileElement(node) {
+        const attrs = node.attributes
+        if (!!attrs.length) {
+            const attrsArr = Array.from(attrs)
+            attrsArr.forEach((att) => {
+                if(att.nodeName === 'v-model') {
+                    const val = att.value
+                    node.value = this.vm.$data[val]
+                }
+            })
+        }
     }
     compileText(node) {
         const con = node.textContent
