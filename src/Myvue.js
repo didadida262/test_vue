@@ -2,8 +2,15 @@ class MyVue {
     constructor(vm) {
         this.vm = vm
         this.$data = vm.data
-        this.$el = vm.el
+        this.$el = document.querySelector(vm.el)
+
+        // 1.数据代理
         this.proxyData()
+        new Compile(this)
+
+        // 2.数据劫持
+
+        // 3.模板编译
     }
     proxyData() {
         for (let key in this.$data) {
