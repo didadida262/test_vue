@@ -1,7 +1,6 @@
-//  什么叫编译模板--->把template变成dom，如{{变量}}--->真实的数据
 
 class Compile {
-    constructor(vm) {
+    constructor(vm, target) {
         this.vm = vm
         this.el = vm.$el
         const fragment = this.nodeToFragment()
@@ -41,17 +40,10 @@ class Compile {
     }
     compileText(node) {
         const con = node.textContent
-        // const con = '{{msg}}---{{info}}'
         const reg = /\{\{(.+?)\}\}/g
         if(reg.test(con)) {
+            console.log(node)
             const newVal = con.replace(reg, (...arg) => {
-                // arg[1]就是data中的变量名，此处为msg、info
-                new Watcher(this.vm, arg[1], () => {
-                    const xx = con.replace(reg, (...arg) => {
-                        return this.vm.$data[arg[1]]
-                     })
-                    node.textContent = xx
-                })
                 return this.vm.$data[arg[1]]
             })
             node.textContent = newVal

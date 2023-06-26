@@ -5,9 +5,9 @@ class MyVue {
         this.$el = document.querySelector(vm.el)
 
         // 1.数据代理
-        this.proxyData()
+        // this.proxyData()
+        new Obsever(this)
         new Compile(this)
-
         // 2.数据劫持
 
         // 3.模板编译
@@ -21,6 +21,7 @@ class MyVue {
                     return this.$data[key]
                 },
                 set(newVal) {
+                    new Compile(this)
                     this.$data[key] = newVal
                 }
             })
